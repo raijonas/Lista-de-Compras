@@ -1,22 +1,26 @@
 package com.example.orgs.ui.activity
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orgs.R
+import com.example.orgs.dao.ProdutoDao
 import com.example.orgs.model.Produto
 import com.example.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.math.BigDecimal
 
 //aqui a classe main precisa herdar da Activity do android
 //os componentes em android possuem ciclos de vida
 //a activity possui um ciclo de vida
 
-class MainActivity : Activity(){
+class MainActivity : AppCompatActivity(){
     //o super é responsável em resolver os "pepinos" do android
     //o override é uma sobrescrita
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,14 +50,26 @@ class MainActivity : Activity(){
 //        val valor = findViewById<TextView>(R.id.valor)
 //        valor.text = "R$ 8.30"
 
+        val buscar = ProdutoDao().buscarProduto()
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.adapter = ListaProdutosAdapter(context = this, produtos = listOf(
-            Produto(nome = "Feijão", descricao = "Feião doce", BigDecimal(20.00)),
-            Produto(nome = "Feijão", descricao = "Feião Carioca", BigDecimal(25.00))
-        ))
+        recyclerView.adapter = ListaProdutosAdapter(context = this, produtos = buscar)
+        /*    Produto(nome = "Feijão", descricao = "Feijão doce", BigDecimal(20.00)),
+            Produto(nome = "Feijão", descricao = "Feijão Carioca", BigDecimal(25.00)),
+            Produto(nome = "Fogazza", descricao = "Só pra mim", BigDecimal(20.00) )
+        ))*/
+
+        //aqui vamos inicializar uma activity por meio dessa, utilizando nosso botão
+        val fab = findViewById<FloatingActionButton>(R.id.floatingActionButton)
+        fab.setOnClickListener {
+            val intent = Intent(this, FormularioProdutoActivity::class.java)
+            startActivity(intent)
+        }
+
+
+
         //o recyclerView exige que vc indique qual o gerenciador do layout, como queremos
         //que os componentes sejam apresentados. A forma 1 é em código:
-        //a forma 2 estrá em layout
+        //a forma 2 estará em layout
         //recyclerView.layoutManager = LinearLayoutManager(this)
     }
 }
