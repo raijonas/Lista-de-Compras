@@ -12,18 +12,23 @@ import com.example.orgs.model.Produto
 //aqui precisamos criar uma colection na ListaProdutosAdapter pq as funcs abaixos preccisa de uma lista
 class ListaProdutosAdapter(
     private val context: Context,
-    private val produtos: List<Produto>
+    produtos: List<Produto>
 ) : RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
+
+    //essa propriedade é uma lista modificavel que vai ajudar a modificar
+    //os produtos dentro do nosso adapter no lugar de uma lista fisica
+
+    private val produtos = produtos.toMutableList() //serve para transformar em uma lista multavel
 
     //classe para a onCreateViewHolder
     //ele sempre retorna o view holder que estamos criando
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun vincula(produto: Produto) {
-            val nome = itemView.findViewById<TextView>(R.id.nome)
+            val nome = itemView.findViewById<TextView>(R.id.produto_item_nome)
             nome.text = produto.nome
-            val descricao = itemView.findViewById<TextView>(R.id.descricao)
+            val descricao = itemView.findViewById<TextView>(R.id.produto_item_descricao)
             descricao.text = produto.descricao
-            val valor = itemView.findViewById<TextView>(R.id.valor)
+            val valor = itemView.findViewById<TextView>(R.id.produto_item_valor)
             valor.text = produto.valor.toPlainString()
         }
     }
@@ -50,5 +55,13 @@ class ListaProdutosAdapter(
 
     //quantos itens queremos apresentar no adapter
     override fun getItemCount(): Int = produtos.size
+
+
+    fun atualiza(produtos: List<Produto>) {
+        this.produtos.clear() //o clear serve para limpar os dados que eu quero alterar
+        this.produtos.addAll(produtos)
+        notifyDataSetChanged() //ele avisa paa o adpater que fizemos uma modificação
+        //assim, o adpter vai recarregar com as novas infos
+    }
 
 }
