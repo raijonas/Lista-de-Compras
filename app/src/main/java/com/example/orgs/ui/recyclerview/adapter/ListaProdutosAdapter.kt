@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orgs.R
+import com.example.orgs.databinding.ProdutoItemBinding
 import com.example.orgs.model.Produto
 
 //aqui precisamos criar uma colection na ListaProdutosAdapter pq as funcs abaixos preccisa de uma lista
@@ -22,13 +23,14 @@ class ListaProdutosAdapter(
 
     //classe para a onCreateViewHolder
     //ele sempre retorna o view holder que estamos criando
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(binding: ProdutoItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        private val nome = binding.produtoItemNome
+        private val descricao = binding.produtoItemDescricao
+        private val valor = binding.produtoItemValor
+
         fun vincula(produto: Produto) {
-            val nome = itemView.findViewById<TextView>(R.id.produto_item_nome)
             nome.text = produto.nome
-            val descricao = itemView.findViewById<TextView>(R.id.produto_item_descricao)
             descricao.text = produto.descricao
-            val valor = itemView.findViewById<TextView>(R.id.produto_item_valor)
             valor.text = produto.valor.toPlainString()
         }
     }
@@ -40,10 +42,11 @@ class ListaProdutosAdapter(
         //vamos criar uma view exclusiva a partir do nosso layout
         //ele vai pedir um contexto, mas como adapter não tem um contexto
         //vamos criar um atributo no construtor e usar como parametro
-        val inflater = LayoutInflater.from(context)
-        //aqui tenho que colocar exatamente o layout que quero mostrar
-        val view = inflater.inflate(R.layout.produto_item, parent, false)
-        return ViewHolder(view)
+        val binding = ProdutoItemBinding.inflate(
+            //aqui tenho que colocar exatamente o layout que quero mostrar
+            LayoutInflater.from(context), parent, false
+        )
+        return ViewHolder(binding)
     }
 
 

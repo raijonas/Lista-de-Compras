@@ -7,20 +7,25 @@ import android.widget.Button
 import android.widget.EditText
 import com.example.orgs.R
 import com.example.orgs.dao.ProdutoDao
+import com.example.orgs.databinding.ActivityFormularioProdutoBinding
 import com.example.orgs.model.Produto
 import java.math.BigDecimal
 
 class FormularioProdutoActivity : AppCompatActivity(R.layout.activity_formulario_produto) {
     //com o androidX não precisamos do setContentview e nem da fun onCreate
+    private val binding by lazy {
+        ActivityFormularioProdutoBinding.inflate(layoutInflater)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //configurar o botao para salvar
         configuraBotaoSalvar()
+        setContentView(binding.root)
     }
 
     private fun configuraBotaoSalvar() {
-        val botaoSalvar = findViewById<Button>(R.id.activity_formulario_produto_salvarButton)
+        val botaoSalvar = binding.activityFormularioProdutoSalvarButton
         val dao = ProdutoDao()
 
         //listeners são referencias que ficam atentas a alguma ação
@@ -46,14 +51,14 @@ class FormularioProdutoActivity : AppCompatActivity(R.layout.activity_formulario
     }
 
     private fun criaProduto(): Produto {
-        val campoNome = findViewById<EditText>(R.id.activity_formulario_produto_nome)
+        val campoNome = binding.activityFormularioProdutoNome
         //buscamos as informações de uma edit text assim, usando o text e toString()
         val nome = campoNome.text.toString()
 
-        val campoDescricao = findViewById<EditText>(R.id.activity_formulario_produto_descricao)
+        val campoDescricao = binding.activityFormularioProdutoDescricao
         val descricao = campoDescricao.text.toString()
 
-        val campoValor = findViewById<EditText>(R.id.activity_formulario_produto_valor)
+        val campoValor = binding.activityFormularioProdutoValor
         val valorEmTexto = campoValor.text.toString()
         //se o valor preenchido estiver vazio, ele vai retornar zero
         val valor = if (valorEmTexto.isBlank()) {

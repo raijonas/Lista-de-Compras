@@ -1,5 +1,6 @@
 package com.example.orgs.ui.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -7,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orgs.R
 import com.example.orgs.dao.ProdutoDao
+import com.example.orgs.databinding.ActivityListaProdutosBinding
 import com.example.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -21,8 +23,13 @@ class ListaProdutosActivity : AppCompatActivity(R.layout.activity_lista_produtos
     //vamos colocar o adapter para criar uma unica vez, e pra isso vamos transformar
     //em uma propriedade e movimentar o dao para cá
     private val buscar = ProdutoDao()
-    private val adapter = ListaProdutosAdapter(context = this, produtos = buscar.buscarProduto())
-
+    //private val adapter = ListaProdutosAdapter(context = this, produtos = buscar.buscarProduto())
+    private val binding by lazy {
+        ActivityListaProdutosBinding.inflate(layoutInflater)
+    }
+    private val adapter by lazy {
+        ListaProdutosAdapter(this, produtos = buscar.buscarProduto())
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState) //sempre precisamos chamar um super em ciclos de vida
@@ -48,8 +55,7 @@ class ListaProdutosActivity : AppCompatActivity(R.layout.activity_lista_produtos
         //desnecessários
         configuraRecyclerView()
         configuraFab()
-
-
+        setContentView(binding.root)
     }
 
     override fun onResume() {
@@ -59,7 +65,7 @@ class ListaProdutosActivity : AppCompatActivity(R.layout.activity_lista_produtos
 
     private fun configuraFab() {
         //aqui vamos inicializar uma activity por meio dessa, utilizando nosso botão
-        val fab = findViewById<FloatingActionButton>(R.id.activity_lista_produto_fab)
+        val fab = binding.activityListaProdutoFab
         fab.setOnClickListener {
             val intent = Intent(this, FormularioProdutoActivity::class.java)
             startActivity(intent)
@@ -67,7 +73,7 @@ class ListaProdutosActivity : AppCompatActivity(R.layout.activity_lista_produtos
     }
 
     private fun configuraRecyclerView() {
-        val recyclerView = findViewById<RecyclerView>(R.id.activity_lista_produto_recyclerView)
+        val recyclerView = binding.activityListaProdutoRecyclerView
         recyclerView.adapter = adapter
         /*    Produto(nome = "Feijão", descricao = "Feijão doce", BigDecimal(20.00)),
             Produto(nome = "Feijão", descricao = "Feijão Carioca", BigDecimal(25.00)),
