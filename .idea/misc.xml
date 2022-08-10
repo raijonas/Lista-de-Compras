@@ -7,10 +7,14 @@
         <entry key="..\:/Documentos/Android/app/src/main/res/layout/produto_item.xml" value="0.25" />
         <entry key="..\:/Documentos/Android/lista-de-compras/Lista-de-Compras/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2715" />
         <entry key="..\:/Documentos/Android/lista-de-compras/Lista-de-Compras/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2715" />
-        <entry key="..\:/Documentos/Android/lista-de-compras/Lista-de-Compras/app/src/main/res/layout/activity_formulario_produto.xml" value="0.1" />
+        <entry key="..\:/Documentos/Android/lista-de-compras/Lista-de-Compras/app/src/main/res/drawable/placeholder.xml" value="0.1" />
+        <entry key="..\:/Documentos/Android/lista-de-compras/Lista-de-Compras/app/src/main/res/drawable/plano_de_fundo_produto.xml" value="0.277" />
+        <entry key="..\:/Documentos/Android/lista-de-compras/Lista-de-Compras/app/src/main/res/font/montserrat_alternates.xml" value="0.33" />
+        <entry key="..\:/Documentos/Android/lista-de-compras/Lista-de-Compras/app/src/main/res/layout/activity_formulario_produto.xml" value="0.14457831325301204" />
         <entry key="..\:/Documentos/Android/lista-de-compras/Lista-de-Compras/app/src/main/res/layout/activity_lista_produtos.xml" value="0.1" />
         <entry key="..\:/Documentos/Android/lista-de-compras/Lista-de-Compras/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Documentos/Android/lista-de-compras/Lista-de-Compras/app/src/main/res/layout/produto_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Documentos/Android/lista-de-compras/Lista-de-Compras/app/src/main/res/layout/formulario_imagem.xml" value="0.2814814814814815" />
+        <entry key="..\:/Documentos/Android/lista-de-compras/Lista-de-Compras/app/src/main/res/layout/produto_item.xml" value="0.16" />
       </map>
     </option>
   </component>

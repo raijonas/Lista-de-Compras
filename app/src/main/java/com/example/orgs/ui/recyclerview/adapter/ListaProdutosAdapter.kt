@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.orgs.R
 import com.example.orgs.databinding.ProdutoItemBinding
 import com.example.orgs.model.Produto
+import java.text.NumberFormat
+import java.util.*
 
 //aqui precisamos criar uma colection na ListaProdutosAdapter pq as funcs abaixos preccisa de uma lista
 class ListaProdutosAdapter(
@@ -23,15 +26,39 @@ class ListaProdutosAdapter(
 
     //classe para a onCreateViewHolder
     //ele sempre retorna o view holder que estamos criando
-    class ViewHolder(binding: ProdutoItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        private val nome = binding.produtoItemNome
-        private val descricao = binding.produtoItemDescricao
-        private val valor = binding.produtoItemValor
+    class ViewHolder(private val binding: ProdutoItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun vincula(produto: Produto) {
+            val nome = binding.produtoItemNome
             nome.text = produto.nome
+            val descricao = binding.produtoItemDescricao
             descricao.text = produto.descricao
-            valor.text = produto.valor.toPlainString()
+            val valor = binding.produtoItemValor
+            val formatador: NumberFormat =
+                NumberFormat.getCurrencyInstance(Locale("pt", "br"))
+            val valorEmMoeda = formatador.format(produto.valor)
+            valor.text = valorEmMoeda
+
+            val visibilidade = if(produto.imagem != null){
+                //se o conteudo da view for diferente de nula (se tiver conteudo), a view vai aparecer
+                View.VISIBLE
+            }else {
+                //se o conteudo da view for nula, ele vai ocultar a view
+                View.GONE
+
+                //se o conteudo da view for nula, ele vai deixar o conteudo invisivel
+                //View.INVISIBLE
+            }
+            binding.imageView.visibility = visibilidade
+
+            binding.imageView.load(produto.imagem){
+                //se a imagem for nula, essa função apresenta uma imagem
+                fallback(R.drawable.erro)
+
+                //esse metodo vai colocar um conteudo visual em momentos que nao sabemos
+                //que é realmente uma imagem
+                error(R.drawable.erro)
+            }
         }
     }
 

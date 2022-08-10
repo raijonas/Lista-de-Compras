@@ -5,10 +5,14 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
+import coil.load
 import com.example.orgs.R
 import com.example.orgs.dao.ProdutoDao
 import com.example.orgs.databinding.ActivityFormularioProdutoBinding
+import com.example.orgs.databinding.FormularioImagemBinding
 import com.example.orgs.model.Produto
+import com.example.orgs.ui.Dialog.FormularioImagemDioalog
 import java.math.BigDecimal
 
 class FormularioProdutoActivity : AppCompatActivity(R.layout.activity_formulario_produto) {
@@ -16,12 +20,22 @@ class FormularioProdutoActivity : AppCompatActivity(R.layout.activity_formulario
     private val binding by lazy {
         ActivityFormularioProdutoBinding.inflate(layoutInflater)
     }
+    private var url: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //configurar o botao para salvar
         configuraBotaoSalvar()
         setContentView(binding.root)
+        binding.activityFormularioProdutoImagem.setOnClickListener {
+            FormularioImagemDioalog(this)
+                .mostra(url){ imagem ->
+                    url = imagem
+                    binding.activityFormularioProdutoImagem.load(url)
+                }//essa expressão lambida vem de formularioImagemDialog, que vai
+                //ser executada no momento que desejar la em formularioImagemDialog
+        }
     }
 
     private fun configuraBotaoSalvar() {
@@ -70,7 +84,8 @@ class FormularioProdutoActivity : AppCompatActivity(R.layout.activity_formulario
         return Produto(
             nome = nome,
             descricao = descricao,
-            valor = valor
+            valor = valor,
+            imagem = url
         )
     }
 }
