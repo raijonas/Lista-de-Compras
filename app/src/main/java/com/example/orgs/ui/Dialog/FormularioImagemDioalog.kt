@@ -37,6 +37,7 @@ class FormularioImagemDioalog(private val context: Context) {
                     .setPositiveButton("Confirmar") { _, _ ->
                         val url = formularioImagemUrl.text.toString()
                         quandoImagemCarregada(url)
+
                     }
                     .setNegativeButton("Cancelar") { _, _ -> }
                     .show()
